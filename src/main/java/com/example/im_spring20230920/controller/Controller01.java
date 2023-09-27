@@ -19,6 +19,8 @@ public class Controller01 {
     public void method3(){
         System.out.println("컨트롤러메소드path2");
     }
+
+
 }
 
 // Client -> Server :

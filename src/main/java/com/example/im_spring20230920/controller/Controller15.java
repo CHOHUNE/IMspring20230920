@@ -1,0 +1,97 @@
+package com.example.im_spring20230920.controller;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Arrays;
+import java.util.List;
+
+@Controller
+@RequestMapping("main15")
+public class Controller15 {
+
+    @GetMapping("sub1")
+    public void method1(HttpSession session, HttpServletRequest request) {
+        System.out.println("session = " + session.getId());
+        System.out.println("request = " + request.getRemoteHost());
+    }
+
+    @GetMapping("sub3")
+    public void method3(HttpSession session, @RequestParam(value = "name", defaultValue = "") String name, HttpServletRequest request) {
+        if (!name.isBlank()) {
+            session.setAttribute("username", name);
+        }
+        Object username = session.getAttribute("username");
+
+        if (username != null) {
+            System.out.println("username = " + username);
+            System.out.println("request.getRemotHost() = " + request.getRemoteHost());
+        }
+    }
+
+    @GetMapping("sub4")
+    public void method4() {
+
+    }
+
+    @PostMapping("sub5")
+    public void method5(String name, HttpSession session) {
+        session.setAttribute("username", name);
+    }
+
+    @GetMapping("sub6")
+    public void method6() {
+
+    }
+
+    @GetMapping("sub7")
+    public void method7() {
+    }
+
+    @PostMapping("sub8")
+    public void method8(String[] foods, HttpSession session) {
+        System.out.println("foods = " + Arrays.toString(foods));
+        session.setAttribute("foodList", foods);
+
+//        Simpleproperty면 RequestParam으로 간주한다. -> SimpleValueType -> 기본타입(primitive),String 타입,array 타입
+        /* 이 외의 타입들은 어노테이션을 달아줘야 한다. 그 외의 타입은 Model Attribute로 */
+
+    }
+
+    @GetMapping("sub9")
+    public void method9() {
+
+    }
+
+    @GetMapping("sub10")
+    public void method10(Model model, HttpSession session) {
+        model.addAttribute("modelAttr1", "탕후루");
+        session.setAttribute("sessionAttr1", "마라탕");
+
+        model.addAttribute("attr1", "후루");
+        session.setAttribute("attr1", "라탕");
+    }
+
+    @GetMapping("sub11")
+    public void method11(Model model, HttpSession session){
+        model.addAttribute("items",List.of("두식","봉석"));
+        session.setAttribute("items",List.of("피자","햄버거","돈까수"));
+    }
+}
+/* post 요청 / main15/sub8 - request parameter foods 를 session 에 attribute로 넣고
+ * sub8.jsp로 포워드 하는 메서드.
+ *
+ *  /main15/sub9 get 요청
+ *  sub9.jsp로 포워드 하는 메서드 만들기
+ *
+ * 단 sub8과 sub9에서는 sub7에서 선택한 음식들을 보여주기  */
+
+
+/* 모델에 저장하는 정보 모델 어트리 뷰트
+ * 세션에 젖아하는 정보 세션 어트리뷰트 */
