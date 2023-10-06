@@ -10,6 +10,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     sourceCompatibility = '17'
+
 }
 configurations {
     compileOnly {
@@ -34,8 +35,12 @@ dependencies {
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
 
-}
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
+}
 
 tasks.named('test') {
     useJUnitPlatform()
