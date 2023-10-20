@@ -15,23 +15,15 @@ public class MyApp16 {
 
         System.out.println("bean2 = " + bean2.hashCode());
         
-<<<<<<< HEAD
-        System.out.println("bean1 = " + bean1.hashCode()); //1
-        System.out.println(bean2.getField().hashCode());//1
-=======
+
         System.out.println("bean1 = " + bean1.hashCode());
         System.out.println(bean2.getField().hashCode());
->>>>>>> origin/master
     }
 }
 
 // (1) 이 같은 값이 나오도록 
-<<<<<<< HEAD
 // configuration Spring bean configuration3 작성
-=======
-// configuration Spring 
 // bean configuration3 작성
->>>>>>> origin/master
 // MyClass30, MyClass31 에 annotation 작성하지 않기
 // 필요하면 생성자나 setter 작성가능 
 
@@ -55,11 +47,7 @@ class MyClass31{
 class MyClass30{
     private MyClass31 field;
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> origin/master
     public MyClass31 getField() {
         return field;
     }
