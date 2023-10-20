@@ -116,7 +116,7 @@ public interface MyDao4 {
                     contactname,
                     address,
                     city,
-                    postalcode,
+                    postalcode,     
                     country
             FROM customers
             WHERE CustomerID = #{id}
@@ -124,7 +124,7 @@ public interface MyDao4 {
     MyDto34 select9(Integer id);
 
     @Update("""
-            UPDATE customers
+            UPDATE customers 
             SET CustomerName = #{name},
                 ContactName = #{contactName},
                 Address = #{address},

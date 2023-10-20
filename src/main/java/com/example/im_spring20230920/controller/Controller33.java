@@ -49,6 +49,8 @@ public class Controller33 {
         }
     }
 
+    // 파라메터에 MultipartFile 넣고, getFilename -> String path -> input output
+//   exception try 문장  byte , len 써주고 while 문으로 bis.read bos.write
     @GetMapping("sub3")
     public void method3() {
 
@@ -83,27 +85,35 @@ public class Controller33 {
 
     }
 
-    @PostMapping("sub6")
-    public void method6(MultipartFile[] files) throws IOException {
-//        System.out.println("files.length = " + files.length);
-        for (MultipartFile file : files) {
-            System.out.println("file.getSize() = " + file.getSize());
 
-            if (file.getSize() > 0) { //길이는 1부터 시작이라 0을 확실하게 얻기 위해
-                String path = "C:\\Temp\\";
-                BufferedInputStream bis = new BufferedInputStream(file.getInputStream());
-                BufferedOutputStream bos
-                        = new BufferedOutputStream((new FileOutputStream(path + file.getOriginalFilename())));
+    @PostMapping
+    public void method6(MultipartFile[] multipartFiles) throws IOException {
+        String path = "C:\\Temp\\";
 
+        for (MultipartFile multipartFile : multipartFiles) {
+            if (multipartFile.getSize() != 0) {
+
+                BufferedInputStream bis = new BufferedInputStream(multipartFile.getInputStream());
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path + multipartFile.getOriginalFilename()));
                 int len = 0;
-                byte[] data = new byte[2048];
-                while ((len = bis.read(data)) != -1) {
-                    bos.write(data, 0, len);
+                try (bis; bos) {
+
+                    byte[] bytes = new byte[2048];
+                    while (bis.read(bytes) != 0) {
+                        bos.write(bytes, 0, len);
+
+                    }
                 }
-                bos.flush();
+
             }
         }
     }
+    /* 파일 전송하는 예제
+
+
+     *
+     * */
+
 
     @GetMapping("sub7")
     public void method7() {
@@ -113,31 +123,33 @@ public class Controller33 {
     //    여러 업로드 파일을 - C:\\TEMP\\upload\\ 에 저장
 //     만약 upload 폴더가 없으면 생성하는 것 까지
     @PostMapping("sub8")
-    public void method8(MultipartFile[] files) throws IOException {
+    public void method8(MultipartFile[] multipartFiles) throws Exception {
 
-        for (MultipartFile file : files) {
+        String path = "C:\\Temp\\";
 
+        for (MultipartFile multipartFile : multipartFiles) {
+            String dirPath = multipartFile.getOriginalFilename();
 
-            if (file.getSize() > 0) {
-                String path = "C:\\Temp\\upload";
-                String filePath= path+ "\\" +file.getOriginalFilename();
-                File dir =new File(path);
-                if(!dir.exists()){
+            if (multipartFile.getSize() > 0) {
+                BufferedInputStream bis = new BufferedInputStream(multipartFile.getInputStream());
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path + multipartFile.getOriginalFilename()));
+
+                File dir = new File(dirPath);
+                if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                BufferedInputStream bis = new BufferedInputStream(file.getInputStream());
-                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path));
-                try (bos; bis) {
-                    int len = 0;
+
+                try (bis; bos) {
                     byte[] data = new byte[2048];
+                    int len = 0;
+
                     while ((len = bis.read(data)) != -1) {
+
                         bos.write(data, 0, len);
                     }
-                    bos.flush();
 
                 }
             }
         }
     }
-
 }

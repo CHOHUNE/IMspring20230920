@@ -6,6 +6,8 @@ import com.example.im_spring20230920.domain.MyDto38;
 import com.example.im_spring20230920.domain.MyDto37;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,14 @@ public class Controller32 {
         dao.insert1(dto);
         System.out.println();
     }
+
+//    main32/sub1?name= id를 집어 넣으면 삽입하는 예제
+//     dao insert 객체에 dto
+
+
+//    main32/sub2?lastName=
+
+
     @GetMapping("sub2")
     public void method2(MyDto38 dto){
         dao.insert2(dto);
@@ -44,6 +54,21 @@ public class Controller32 {
 //        return "redirect:/main32/sub5?eid=" + dto.getEid();
     }
 
+@Service
+@Transactional(rollbackFor = Exception.class)
+@RequiredArgsConstructor
+public class Myservice{
+        private final MyDao6 dao;
+        public void tx1(){
+            dao.update1();
+
+            int c=1/0;
+
+            dao.update2();
+        }
+}
+
+
     @GetMapping("sub5")
     public void method5(){
         try{
@@ -53,6 +78,10 @@ public class Controller32 {
             System.out.println("dao = " + dao.select3());
         }
     }
+
+
+
+
 // ROLLBACK 예제 MyComponent 참고
 // 어노테이션이 붙은 메서드를 의도대로 실행 시키려면 같은 빈 안에서 호출
 //    을 피해야한다. 따라서 TRANSACTIONAL 을 바깥으로 분리 시켜
