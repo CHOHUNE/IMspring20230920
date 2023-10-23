@@ -84,3 +84,7 @@ public class Controller35 {
         }
     }
 }
+
+// 페이지 로딩 없이 요청을 할수도 있고 받을 수도 있다.
+// 여기까지 배웠던 건 axios 메소드의 requqest, post, postForm 메서드
+//axios 사이트 axios api에 명시 되어 있음
